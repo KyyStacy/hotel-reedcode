@@ -1,0 +1,26 @@
+html, body {
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  position: relative !important;
+}
+
+#root {
+  height: auto !important;
+  min-height: 100vh;
+  position: relative !important;
+}
+
+ion-app,
+ion-router-outlet,
+ion-content {
+  position: relative !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.ion-page {
+  position: relative !important;
+  height: auto !important;
+  overflow: visible !important;
+}

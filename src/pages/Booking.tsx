@@ -207,7 +207,7 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Header */}
       <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-lg sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -223,10 +223,10 @@ const Booking: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Room Details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Image Gallery */}
             <div className="card overflow-hidden">
               <div className="relative h-96">
@@ -236,13 +236,13 @@ const Booking: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="p-4 grid grid-cols-3 gap-4">
+              <div className="p-3 sm:p-4 grid grid-cols-3 gap-2 sm:gap-4">
                 {room.images.map((img, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
-                    className={`relative h-24 rounded-lg overflow-hidden ${
-                      selectedImage === index ? 'ring-4 ring-primary-500' : ''
+                    className={`relative h-16 sm:h-20 md:h-24 rounded-lg overflow-hidden ${
+                      selectedImage === index ? 'ring-2 sm:ring-4 ring-primary-500' : ''
                     }`}
                   >
                     <img src={img} alt={`${room.name} ${index + 1}`} className="w-full h-full object-cover" />
@@ -252,23 +252,23 @@ const Booking: React.FC = () => {
             </div>
 
             {/* Room Info */}
-            <div className="card p-6">
-              <div className="flex items-start justify-between mb-4">
+            <div className="card p-4 sm:p-5 lg:p-6">
+              <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-3 sm:gap-0">
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-800 mb-2">{room.name}</h1>
-                  <span className="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">{room.name}</h1>
+                  <span className="inline-block bg-primary-100 text-primary-700 px-3 sm:px-4 py-1 rounded-full text-xs sm:text-sm font-semibold">
                     {room.type}
                   </span>
                 </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">{formatPrice(room.price)}</p>
+                <div className="text-left sm:text-right">
+                  <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">{formatPrice(room.price)}</p>
                   <p className="text-sm text-gray-500">per malam</p>
                 </div>
               </div>
 
               <p className="text-gray-600 mb-6">{room.description}</p>
 
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
                 <div className="flex items-center gap-3 p-4 bg-gradient-to-br from-cyan-50 to-teal-50 rounded-xl border border-cyan-100">
                   <svg className="w-6 h-6 text-cyan-600" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
@@ -307,10 +307,10 @@ const Booking: React.FC = () => {
 
           {/* Booking Form */}
           <div className="lg:col-span-1">
-            <div className="card p-6 sticky top-24">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">Detail Pemesanan</h2>
+            <div className="card p-4 sm:p-5 lg:p-6 lg:sticky lg:top-24">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Detail Pemesanan</h2>
               
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Nama Lengkap
