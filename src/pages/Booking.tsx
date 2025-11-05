@@ -126,7 +126,7 @@ const Booking: React.FC = () => {
     email: user?.email || '',
     phone: user?.phone || '',
     checkIn: '',
-    checkOut: '',
+    nights: 1,
     guests: 1
   });
 
@@ -172,47 +172,41 @@ const Booking: React.FC = () => {
     }).format(price);
   };
 
-  const calculateNights = () => {
-    if (formData.checkIn && formData.checkOut) {
+  const calculateCheckOut = () => {
+    if (formData.checkIn && formData.nights > 0) {
       const checkIn = new Date(formData.checkIn);
-      const checkOut = new Date(formData.checkOut);
-      const diffTime = Math.abs(checkOut.getTime() - checkIn.getTime());
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      return diffDays;
+      checkIn.setDate(checkIn.getDate() + formData.nights);
+      return checkIn.toISOString().split('T')[0];
     }
-    return 0;
+    return '';
   };
 
   const calculateTotal = () => {
-    const nights = calculateNights();
-    return room.price * nights;
+    return room.price * formData.nights;
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'number' ? parseInt(value) || 0 : value
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.phone || !formData.checkIn || !formData.checkOut) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.checkIn || formData.nights < 1) {
       alert('Mohon lengkapi semua data');
       return;
     }
 
-    if (new Date(formData.checkOut) <= new Date(formData.checkIn)) {
-      alert('Tanggal check-out harus setelah check-in');
-      return;
-    }
+    const checkOut = calculateCheckOut();
 
     const bookingData = {
       room,
       ...formData,
-      nights: calculateNights(),
+      checkOut,
       total: calculateTotal(),
       bookingId: `BK${Date.now()}`
     };
@@ -412,17 +406,23 @@ const Booking: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Check-out
+                    Jumlah Malam
                   </label>
                   <input
-                    type="date"
-                    name="checkOut"
-                    value={formData.checkOut}
+                    type="number"
+                    name="nights"
+                    value={formData.nights}
                     onChange={handleInputChange}
-                    min={formData.checkIn || getTodayDate()}
+                    min="1"
+                    max="30"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
                     required
                   />
+                  {formData.checkIn && formData.nights > 0 && (
+                    <p className="mt-2 text-sm text-gray-600">
+                      Check-out: <span className="font-semibold text-cyan-600">{new Date(calculateCheckOut()).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -441,7 +441,7 @@ const Booking: React.FC = () => {
                   />
                 </div>
 
-                {calculateNights() > 0 && (
+                {formData.nights > 0 && formData.checkIn && (
                   <div className="bg-gradient-to-br from-cyan-50 to-teal-50 p-5 rounded-xl space-y-2 border border-cyan-100">
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Harga per malam</span>
@@ -449,7 +449,11 @@ const Booking: React.FC = () => {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-600">Jumlah malam</span>
-                      <span className="font-semibold">{calculateNights()} malam</span>
+                      <span className="font-semibold">{formData.nights} malam</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Check-out</span>
+                      <span className="font-semibold">{new Date(calculateCheckOut()).toLocaleDateString('id-ID')}</span>
                     </div>
                     <div className="border-t border-cyan-200 pt-3 mt-2">
                       <div className="flex justify-between items-center">
