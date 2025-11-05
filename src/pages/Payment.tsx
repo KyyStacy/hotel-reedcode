@@ -129,24 +129,41 @@ const Payment: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-cyan-50 via-white to-teal-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-lg sticky top-0 z-10">
+      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-xl sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={() => history.goBack()}
-            className="flex items-center gap-2 text-white hover:text-cyan-100 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            <span className="font-medium">Kembali</span>
-          </button>
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => history.goBack()}
+              className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="font-medium">Kembali</span>
+            </button>
+            
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <span className="text-2xl">💳</span>
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-lg font-bold text-white">Reed Hotel</h1>
+                <p className="text-xs text-cyan-100">Pembayaran</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8 text-center">
+        <div className="mb-8 text-center animate-fadeInDown">
+          <div className="inline-block w-16 h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center mb-4 animate-bounce">
+            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+          </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-3">Pembayaran</h1>
           <p className="text-gray-600 text-lg">Pilih metode pembayaran untuk menyelesaikan reservasi Anda</p>
         </div>
@@ -154,7 +171,7 @@ const Payment: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Payment Methods */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="card p-6">
+            <div className="card p-6 animate-fadeInUp shadow-xl">
               <h2 className="text-xl font-bold text-gray-800 mb-4">Metode Pembayaran</h2>
               
               <div className="space-y-3">
@@ -192,7 +209,7 @@ const Payment: React.FC = () => {
             </div>
 
             {/* Payment Info */}
-            <div className="card p-6 bg-gradient-to-br from-cyan-50 to-teal-50 border-2 border-cyan-200">
+            <div className="card p-6 bg-gradient-to-br from-cyan-50 to-teal-50 border-2 border-cyan-200 animate-fadeInUp delay-100 shadow-xl">
               <div className="flex gap-3">
                 <svg className="w-6 h-6 text-cyan-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>

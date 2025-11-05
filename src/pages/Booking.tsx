@@ -227,19 +227,31 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-cyan-50 via-white to-teal-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-lg sticky top-0 z-10">
+      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-xl sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={() => history.push('/home')}
-            className="flex items-center gap-2 text-white hover:text-cyan-100 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            <span className="font-medium">Kembali</span>
-          </button>
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => history.push('/home')}
+              className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="font-medium">Kembali</span>
+            </button>
+            
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <span className="text-2xl">🏨</span>
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-lg font-bold text-white">Reed Hotel</h1>
+                <p className="text-xs text-cyan-100">Detail Kamar</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -248,7 +260,7 @@ const Booking: React.FC = () => {
           {/* Room Details */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Image Gallery */}
-            <div className="card overflow-hidden">
+            <div className="card overflow-hidden animate-fadeInUp shadow-xl">
               <div className="relative h-96">
                 <img
                   src={room.images[selectedImage]}
@@ -272,7 +284,7 @@ const Booking: React.FC = () => {
             </div>
 
             {/* Room Info */}
-            <div className="card p-4 sm:p-5 lg:p-6">
+            <div className="card p-4 sm:p-5 lg:p-6 animate-fadeInUp delay-100 shadow-xl">
               <div className="flex flex-col sm:flex-row items-start justify-between mb-4 gap-3 sm:gap-0">
                 <div>
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">{room.name}</h1>
@@ -327,8 +339,15 @@ const Booking: React.FC = () => {
 
           {/* Booking Form */}
           <div className="lg:col-span-1">
-            <div className="card p-4 sm:p-5 lg:p-6 lg:sticky lg:top-24">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">Detail Pemesanan</h2>
+            <div className="card p-4 sm:p-5 lg:p-6 lg:sticky lg:top-24 animate-fadeInUp delay-200 shadow-xl border-2 border-cyan-100">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">Detail Pemesanan</h2>
+              </div>
               
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div>

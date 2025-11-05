@@ -51,19 +51,31 @@ const Profile: React.FC = () => {
     .filter((booking: any) => booking.userId === user.id);
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-cyan-50 via-white to-teal-50">
       {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-lg">
+      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-xl sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button
-            onClick={() => history.push('/home')}
-            className="flex items-center gap-2 text-white hover:text-cyan-100 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            <span className="font-medium">Kembali</span>
-          </button>
+          <div className="flex items-center justify-between">
+            <button
+              onClick={() => history.push('/home')}
+              className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="font-medium">Kembali</span>
+            </button>
+            
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+                <span className="text-2xl">👤</span>
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-lg font-bold text-white">Reed Hotel</h1>
+                <p className="text-xs text-cyan-100">Profile Saya</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -71,9 +83,9 @@ const Profile: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile Card */}
           <div className="lg:col-span-1">
-            <div className="card p-6 text-center">
+            <div className="card p-6 text-center animate-fadeInUp shadow-xl border-2 border-cyan-100">
               <div className="mb-4">
-                <div className="w-24 h-24 mx-auto bg-gradient-to-br from-cyan-400 to-teal-400 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                <div className="w-24 h-24 mx-auto bg-gradient-to-br from-cyan-400 to-teal-400 rounded-full flex items-center justify-center text-white text-3xl font-bold shadow-lg animate-scaleIn">
                   {user.name.charAt(0).toUpperCase()}
                 </div>
               </div>
@@ -113,9 +125,16 @@ const Profile: React.FC = () => {
           {/* Profile Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Personal Information */}
-            <div className="card p-6">
+            <div className="card p-6 animate-fadeInUp delay-100 shadow-xl border-2 border-cyan-100">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-gray-800">Informasi Pribadi</h3>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">Informasi Pribadi</h3>
+                </div>
                 {!isEditing && (
                   <button
                     onClick={() => setIsEditing(true)}
@@ -230,8 +249,15 @@ const Profile: React.FC = () => {
 
             {/* Booking History */}
             {user.role === 'user' && (
-              <div className="card p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">Riwayat Pemesanan</h3>
+              <div className="card p-6 animate-fadeInUp delay-200 shadow-xl border-2 border-cyan-100">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">Riwayat Pemesanan</h3>
+                </div>
                 {bookingHistory.length > 0 ? (
                   <div className="space-y-4">
                     {bookingHistory.map((booking: any, index: number) => (

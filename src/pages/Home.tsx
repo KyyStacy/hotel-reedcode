@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 interface Room {
@@ -111,9 +111,11 @@ const Home: React.FC = () => {
     <div className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-cyan-500 via-primary-600 to-teal-600 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE0YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNk0wIDIwYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl opacity-20 animate-pulse" style={{animationDelay: '1s'}}></div>
+        {/* Animated Background Layers */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE0YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNk0wIDIwYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNiIvPjwvZz48L2c+PC9zdmc+')] opacity-30 animate-fadeIn"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20 animate-float"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl opacity-20 animate-float delay-200"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl opacity-10 animate-float delay-400"></div>
         
         {/* User Menu */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -122,7 +124,7 @@ const Home: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 hover:bg-white/30 transition-all"
+                  className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 hover:bg-white/30 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl animate-fadeInDown"
                 >
                   <div className="w-8 h-8 bg-white/30 rounded-full flex items-center justify-center font-bold">
                     {user.name.charAt(0).toUpperCase()}
@@ -134,7 +136,7 @@ const Home: React.FC = () => {
                 </button>
                 
                 {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-2xl py-2 z-50 animate-scaleIn border border-gray-100">
                     <button
                       onClick={() => {
                         history.push('/profile');
@@ -179,51 +181,49 @@ const Home: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="flex gap-3">
-                <button
-                  onClick={() => history.push('/login')}
-                  className="px-6 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 hover:bg-white/30 transition-all font-medium"
+              <div className="flex gap-2 sm:gap-4 animate-fadeInDown delay-100">
+                <Link
+                  to="/login"
+                  className="px-4 sm:px-6 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 hover:bg-white/30 transition-all text-sm sm:text-base transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Masuk
-                </button>
-                <button
-                  onClick={() => history.push('/register')}
-                  className="px-6 py-2 bg-white text-cyan-600 rounded-full hover:bg-cyan-50 transition-all font-medium"
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 sm:px-6 py-2 bg-white rounded-full hover:bg-gray-100 transition-all text-cyan-600 font-semibold text-sm sm:text-base transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Daftar
-                </button>
+                </Link>
               </div>
             )}
           </div>
         </div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
-          <div className="text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold mb-4 sm:mb-6 tracking-tight drop-shadow-lg leading-tight">
-              ✨ Reed Hotel ✨
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-cyan-50 mb-8 sm:mb-10 max-w-3xl mx-auto font-light leading-relaxed px-4">
-              Nikmati pengalaman menginap terbaik dengan fasilitas premium dan pelayanan berkelas dunia
-            </p>
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 text-xs sm:text-sm md:text-base px-4">
-              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
-                </svg>
-                <span>WiFi Gratis</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"/>
-                </svg>
-                <span>Check-in 24 Jam</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                </svg>
-                <span>Layanan Concierge</span>
-              </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 animate-fadeInUp">
+            Selamat Datang di <span className="text-yellow-300 inline-block animate-bounce">Reed Hotel</span>
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-cyan-50 max-w-3xl mx-auto px-4 animate-fadeInUp delay-200">
+            Pengalaman Menginap yang Tak Terlupakan di Bengkong, Batam
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm md:text-base px-2 animate-fadeInUp delay-300">
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+              </svg>
+              <span>WiFi Gratis</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd"/>
+              </svg>
+              <span>Check-in 24 Jam</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+              </svg>
+              <span>Layanan Concierge</span>
             </div>
           </div>
         </div>
@@ -231,17 +231,20 @@ const Home: React.FC = () => {
 
       {/* Filter Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent px-4">Pilih Kamar Impian Anda</h2>
-        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center px-2">
-          {filters.map((filter) => (
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent px-4 animate-fadeInDown">
+          Pilih Kamar Impian Anda
+        </h2>
+        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center px-2 animate-fadeInUp delay-200">
+          {filters.map((filter, index) => (
             <button
               key={filter}
               onClick={() => setSelectedFilter(filter)}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full font-semibold text-sm sm:text-base transition-all duration-300 ${
+              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 ${
                 selectedFilter === filter
                   ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white shadow-lg shadow-cyan-500/50 scale-105 sm:scale-110'
                   : 'bg-white text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 shadow-md hover:shadow-lg border-2 border-transparent hover:border-cyan-200'
               }`}
+              style={{ animationDelay: `${300 + index * 50}ms` }}
             >
               {filter}
             </button>
@@ -252,10 +255,10 @@ const Home: React.FC = () => {
       {/* Rooms Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {filteredRooms.map((room) => (
+          {filteredRooms.map((room, index) => (
             <div
               key={room.id}
-              className="card overflow-hidden group cursor-pointer"
+              className={`card overflow-hidden group cursor-pointer animate-fadeInUp delay-${Math.min(index * 100, 500)}`}
               onClick={() => handleBookRoom(room.id)}
             >
               <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
