@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px 0 rgba(6, 182, 212, 0.39);
+    border: none;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .btn-secondary {
+    background: white;
+    color: #0891b2;
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 0.75rem;
+    border: 2px solid #06b6d4;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-secondary:hover {
+    background: #ecfeff;
+    border-color: #0891b2;
+    transform: translateY(-2px);
+  }
+  
+  .card {
+    background: white;
+    border-radius: 1.25rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(6, 182, 212, 0.1);
+  }
+  
+  .card:hover {
+    box-shadow: 0 20px 60px rgba(6, 182, 212, 0.2);
+    transform: translateY(-8px);
+    border-color: rgba(6, 182, 212, 0.3);
+  }
+}
