@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 interface Room {
   id: number;
@@ -116,17 +117,36 @@ const rooms: Room[] = [
 const Booking: React.FC = () => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
+  const { isAuthenticated, user } = useAuth();
   const room = rooms.find(r => r.id === parseInt(id));
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
     checkIn: '',
     checkOut: '',
     guests: 1
   });
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      localStorage.setItem('redirectAfterLogin', `/booking/${id}`);
+      history.push('/login');
+    }
+  }, [isAuthenticated, history, id]);
+
+  useEffect(() => {
+    if (user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.name,
+        email: user.email,
+        phone: user.phone || ''
+      }));
+    }
+  }, [user]);
 
   if (!room) {
     return (
