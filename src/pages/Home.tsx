@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { usePlatform } from '../hooks/usePlatform';
+import BottomTabNavigation from '../components/BottomTabNavigation';
 
 interface Room {
   id: number;
@@ -91,6 +93,8 @@ const Home: React.FC = () => {
 
   const filters = ['All', 'Single', 'Double', 'Suite', 'Family', 'Presidential'];
 
+  const { isNative, isMobile } = usePlatform();
+  
   const filteredRooms = selectedFilter === 'All' 
     ? rooms 
     : rooms.filter(room => room.type === selectedFilter);
@@ -108,7 +112,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className={`min-h-screen overflow-x-hidden ${isNative || isMobile ? 'pb-20' : ''}`}>
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-cyan-500 via-primary-600 to-teal-600 text-white overflow-hidden">
         {/* Animated Background Layers */}
@@ -117,10 +121,11 @@ const Home: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl opacity-20 animate-float delay-200"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl opacity-10 animate-float delay-400"></div>
         
-        {/* User Menu */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-end">
-            {isAuthenticated && user ? (
+        {/* User Menu - Hidden on Mobile/Native */}
+        {!isNative && !isMobile && (
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex justify-end">
+              {isAuthenticated && user ? (
               <div className="relative">
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
@@ -149,6 +154,20 @@ const Home: React.FC = () => {
                       </svg>
                       Profile
                     </button>
+                    {user.role === 'user' && (
+                      <button
+                        onClick={() => {
+                          history.push('/bookings');
+                          setShowUserMenu(false);
+                        }}
+                        className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        Riwayat Pemesanan
+                      </button>
+                    )}
                     {user.role === 'admin' && (
                       <button
                         onClick={() => {
@@ -196,18 +215,39 @@ const Home: React.FC = () => {
                 </Link>
               </div>
             )}
+            </div>
           </div>
-        </div>
+        )}
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 text-center">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 animate-fadeInUp">
-            Selamat Datang di <span className="text-yellow-300 inline-block animate-bounce">Reed Hotel</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-cyan-50 max-w-3xl mx-auto px-4 animate-fadeInUp delay-200">
-            Pengalaman Menginap yang Tak Terlupakan di Bengkong, Batam
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm md:text-base px-2 animate-fadeInUp delay-300">
-            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
+        <div className={`relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ${isNative || isMobile ? 'py-6' : 'py-12 sm:py-16 lg:py-20'}`}>
+          {/* Mobile Header */}
+          {(isNative || isMobile) ? (
+            <>
+              <div className="flex items-center justify-center gap-3 mb-4 animate-fadeInDown">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center">
+                  <span className="text-3xl">🏨</span>
+                </div>
+                <h1 className="text-2xl font-bold">Reed Hotel</h1>
+              </div>
+              <p className="text-sm text-cyan-50 mb-4 animate-fadeInUp">
+                Pengalaman Menginap Terbaik di Batam
+              </p>
+            </>
+          ) : (
+            /* Desktop Header */
+            <>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 animate-fadeInUp">
+                Selamat Datang di <span className="text-yellow-300 inline-block animate-bounce">Reed Hotel</span>
+              </h1>
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-cyan-50 max-w-3xl mx-auto px-4 animate-fadeInUp delay-200">
+                Pengalaman Menginap yang Tak Terlupakan di Bengkong, Batam
+              </p>
+            </>
+          )}
+          {/* Feature Badges - Hidden on Mobile */}
+          {!isNative && !isMobile && (
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 text-xs sm:text-sm md:text-base px-2 animate-fadeInUp delay-300">
+              <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 sm:px-5 py-2 sm:py-3 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 hover:scale-105 cursor-pointer">
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
               </svg>
@@ -225,7 +265,8 @@ const Home: React.FC = () => {
               </svg>
               <span>Layanan Concierge</span>
             </div>
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -323,9 +364,10 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-cyan-900 text-white py-12 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Footer - Hidden on Mobile/Native */}
+      {!isNative && !isMobile && (
+        <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-cyan-900 text-white py-12 mt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4">Reed Hotel</h3>
@@ -349,8 +391,12 @@ const Home: React.FC = () => {
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2024 Reed Hotel. All rights reserved.</p>
           </div>
-        </div>
-      </footer>
+          </div>
+        </footer>
+      )}
+      
+      {/* Bottom Tab Navigation - Only on Mobile/Native */}
+      {(isNative || isMobile) && <BottomTabNavigation />}
     </div>
   );
 };

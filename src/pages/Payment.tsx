@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { usePlatform } from '../hooks/usePlatform';
+import BottomTabNavigation from '../components/BottomTabNavigation';
 
 interface BookingData {
   room: {
@@ -20,6 +22,7 @@ interface BookingData {
 
 const Payment: React.FC = () => {
   const history = useHistory();
+  const { isNative, isMobile } = usePlatform();
   const [bookingData, setBookingData] = useState<BookingData | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -129,30 +132,36 @@ const Payment: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-cyan-50 via-white to-teal-50">
+    <div className={`min-h-screen overflow-x-hidden bg-gradient-to-br from-cyan-50 via-white to-teal-50 ${isNative || isMobile ? 'pb-20' : ''}`}>
       {/* Header */}
       <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-xl sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <button
-              onClick={() => history.goBack()}
-              className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              <span className="font-medium">Kembali</span>
-            </button>
+            {/* Back Button - Hidden on Mobile/Native */}
+            {!isNative && !isMobile && (
+              <button
+                onClick={() => history.goBack()}
+                className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="font-medium">Kembali</span>
+              </button>
+            )}
             
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 ${isNative || isMobile ? 'mx-auto' : ''}`}>
               <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
                 <span className="text-2xl">💳</span>
               </div>
-              <div className="hidden sm:block">
+              <div>
                 <h1 className="text-lg font-bold text-white">Reed Hotel</h1>
                 <p className="text-xs text-cyan-100">Pembayaran</p>
               </div>
             </div>
+            
+            {/* Spacer for mobile to center title */}
+            {(isNative || isMobile) && <div className="w-10"></div>}
           </div>
         </div>
       </div>
@@ -311,6 +320,9 @@ const Payment: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* Bottom Tab Navigation - Only on Mobile/Native */}
+      {(isNative || isMobile) && <BottomTabNavigation />}
     </div>
   );
 };

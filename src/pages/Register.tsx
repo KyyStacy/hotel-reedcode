@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { usePlatform } from '../hooks/usePlatform';
+import BottomTabNavigation from '../components/BottomTabNavigation';
 
 const Register: React.FC = () => {
   const history = useHistory();
   const { register } = useAuth();
+  const { isNative, isMobile } = usePlatform();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -60,7 +63,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div className={`min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${isNative || isMobile ? 'pb-20' : ''}`}>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-float"></div>
@@ -139,16 +142,35 @@ const Register: React.FC = () => {
         {/* Right Side - Form */}
         <div className="animate-slideInRight">
           <div className="text-center mb-8">
-            <div className="inline-block animate-bounce mb-4">
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-3xl flex items-center justify-center shadow-2xl transform rotate-12">
-                <span className="text-4xl transform -rotate-12">✨</span>
-              </div>
-            </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-2 animate-fadeInDown">
-              Reed Hotel
-            </h1>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2 animate-fadeInDown delay-100">Buat Akun Baru</h2>
-            <p className="text-gray-600 animate-fadeInDown delay-200">Daftar untuk mulai memesan kamar</p>
+            {/* Mobile Header - Compact */}
+            {(isNative || isMobile) ? (
+              <>
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl">
+                    <span className="text-3xl">🏨</span>
+                  </div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent">
+                    Reed Hotel
+                  </h1>
+                </div>
+                <h2 className="text-xl font-bold text-gray-800 mb-2">Buat Akun Baru</h2>
+                <p className="text-sm text-gray-600">Daftar untuk mulai memesan kamar</p>
+              </>
+            ) : (
+              /* Desktop Header */
+              <>
+                <div className="inline-block animate-bounce mb-4">
+                  <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-3xl flex items-center justify-center shadow-2xl transform rotate-12">
+                    <span className="text-4xl transform -rotate-12">✨</span>
+                  </div>
+                </div>
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-2 animate-fadeInDown">
+                  Reed Hotel
+                </h1>
+                <h2 className="text-2xl font-bold text-gray-800 mb-2 animate-fadeInDown delay-100">Buat Akun Baru</h2>
+                <p className="text-gray-600 animate-fadeInDown delay-200">Daftar untuk mulai memesan kamar</p>
+              </>
+            )}
           </div>
 
           <div className="card p-8 animate-scaleIn delay-300">
@@ -296,17 +318,23 @@ const Register: React.FC = () => {
             </div>
             </div>
           
-          <div className="mt-8 text-center">
-            <Link to="/home" className="text-sm text-gray-600 hover:text-cyan-600 flex items-center justify-center gap-2">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Kembali ke Beranda
-            </Link>
-          </div>
+          {/* Back to Home - Hidden on Mobile/Native */}
+          {!isNative && !isMobile && (
+            <div className="mt-8 text-center">
+              <Link to="/home" className="text-sm text-gray-600 hover:text-cyan-600 flex items-center justify-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Kembali ke Beranda
+              </Link>
+            </div>
+          )}
           </div>
         </div>
       </div>
+      
+      {/* Bottom Tab Navigation - Only on Mobile/Native */}
+      {(isNative || isMobile) && <BottomTabNavigation />}
     </div>
   );
 };

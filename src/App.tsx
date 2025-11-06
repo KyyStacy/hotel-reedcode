@@ -8,6 +8,7 @@ import Confirmation from './pages/Confirmation';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Bookings from './pages/Bookings';
 import AdminDashboard from './pages/AdminDashboard';
 import ReceptionistDashboard from './pages/ReceptionistDashboard';
 
@@ -35,6 +36,9 @@ const App: React.FC = () => (
         </Route>
         <ProtectedRoute exact path="/profile">
           <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/bookings">
+          <Bookings />
         </ProtectedRoute>
         <ProtectedRoute exact path="/admin/dashboard" allowedRoles={['admin']}>
           <AdminDashboard />
