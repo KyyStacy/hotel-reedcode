@@ -124,6 +124,7 @@ const Booking: React.FC = () => {
   const room = rooms.find(r => r.id === parseInt(id));
 
   const [selectedImage, setSelectedImage] = useState(0);
+  const [showImageModal, setShowImageModal] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -224,63 +225,101 @@ const Booking: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-cyan-50 via-white to-teal-50 ${isNative || isMobile ? 'pb-20' : ''}`}>
-      {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-xl sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Back Button - Hidden on Mobile/Native */}
-            {!isNative && !isMobile && (
+    <div className={`min-h-screen bg-gradient-to-br from-gray-50 via-white to-cyan-50 ${isNative || isMobile ? 'pb-20 pt-0' : ''}`}>
+      {/* Header - Web */}
+      {!isNative && !isMobile && (
+        <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
               <button
                 onClick={() => history.push('/home')}
-                className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-all transform hover:scale-105 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-xl font-medium"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                <span className="font-medium">Kembali</span>
+                <span>Kembali</span>
               </button>
-            )}
-            
-            <div className={`flex items-center gap-2 ${isNative || isMobile ? 'mx-auto' : ''}`}>
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                <span className="text-2xl">🏨</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-white">Reed Hotel</h1>
-                <p className="text-xs text-cyan-100">Detail Kamar</p>
+              
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-gray-800">Pemesanan Kamar</h1>
+                  <p className="text-sm text-gray-500">Lengkapi data pemesanan Anda</p>
+                </div>
               </div>
             </div>
-            
-            {/* Spacer for mobile to center title */}
-            {(isNative || isMobile) && <div className="w-10"></div>}
           </div>
         </div>
-      </div>
+      )}
+
+      {/* Header - Mobile */}
+      {(isNative || isMobile) && (
+        <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50 animate-fadeInDown">
+          <div className="pt-16 px-4 pb-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => history.push('/home')}
+                className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center hover:bg-gray-200 transition-all active:scale-95"
+              >
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="flex-1 min-w-0">
+                <h1 className="text-lg font-bold text-gray-800">Pemesanan Kamar</h1>
+                <p className="text-xs text-gray-500 truncate">{room.name}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Room Details */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Image Gallery */}
-            <div className="card overflow-hidden animate-fadeInUp shadow-xl">
-              <div className="relative h-96">
+            <div className="bg-white rounded-2xl overflow-hidden animate-fadeInUp shadow-xl border-2 border-gray-100">
+              <div className={`relative ${isNative || isMobile ? 'h-64' : 'h-96'} group cursor-pointer`} onClick={() => setShowImageModal(true)}>
                 <img
                   src={room.images[selectedImage]}
                   alt={room.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <div className="flex items-center gap-2 text-gray-800">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                      </svg>
+                      <span className="font-semibold text-sm">Lihat Gambar</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg">
+                  <span className="text-sm font-semibold text-gray-800">{selectedImage + 1} / {room.images.length}</span>
+                </div>
               </div>
-              <div className="p-3 sm:p-4 grid grid-cols-3 gap-2 sm:gap-4">
+              <div className={`${isNative || isMobile ? 'p-3' : 'p-4'} grid grid-cols-3 gap-2 sm:gap-3 bg-gray-50`}>
                 {room.images.map((img, index) => (
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
-                    className={`relative h-16 sm:h-20 md:h-24 rounded-lg overflow-hidden ${
-                      selectedImage === index ? 'ring-2 sm:ring-4 ring-primary-500' : ''
+                    className={`relative ${isNative || isMobile ? 'h-16' : 'h-20 md:h-24'} rounded-xl overflow-hidden transition-all duration-300 ${
+                      selectedImage === index 
+                        ? 'ring-4 ring-cyan-500 scale-105' 
+                        : 'ring-2 ring-gray-200 hover:ring-cyan-300 hover:scale-105'
                     }`}
                   >
                     <img src={img} alt={`${room.name} ${index + 1}`} className="w-full h-full object-cover" />
+                    {selectedImage === index && (
+                      <div className="absolute inset-0 bg-cyan-500/20"></div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -485,6 +524,79 @@ const Booking: React.FC = () => {
         </div>
       </div>
       
+      {/* Image Modal */}
+      {showImageModal && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-fadeIn" onClick={() => setShowImageModal(false)}>
+          <button
+            onClick={() => setShowImageModal(false)}
+            className="absolute top-4 right-4 w-12 h-12 bg-white/10 backdrop-blur-md hover:bg-white/20 rounded-full flex items-center justify-center transition-all z-10"
+          >
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          
+          <div className="relative max-w-6xl w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={room.images[selectedImage]}
+              alt={room.name}
+              className="w-full h-auto max-h-[85vh] object-contain rounded-2xl"
+            />
+            
+            {/* Navigation Arrows */}
+            {room.images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage((prev) => (prev === 0 ? room.images.length - 1 : prev - 1));
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-md hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+                >
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage((prev) => (prev === room.images.length - 1 ? 0 : prev + 1));
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-md hover:bg-white/20 rounded-full flex items-center justify-center transition-all"
+                >
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
+            
+            {/* Image Counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 backdrop-blur-md px-4 py-2 rounded-full">
+              <span className="text-white font-semibold">{selectedImage + 1} / {room.images.length}</span>
+            </div>
+            
+            {/* Thumbnail Navigation */}
+            <div className="mt-4 flex gap-2 justify-center">
+              {room.images.map((img, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage(index);
+                  }}
+                  className={`w-16 h-16 rounded-lg overflow-hidden transition-all ${
+                    selectedImage === index ? 'ring-4 ring-white scale-110' : 'ring-2 ring-white/30 hover:ring-white/60'
+                  }`}
+                >
+                  <img src={img} alt={`Thumbnail ${index + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Bottom Tab Navigation - Only on Mobile/Native */}
       {(isNative || isMobile) && <BottomTabNavigation />}
     </div>

@@ -112,19 +112,31 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen overflow-x-hidden ${isNative || isMobile ? 'pb-20' : ''}`}>
+    <div className={`min-h-screen overflow-x-hidden bg-gradient-to-br from-gray-50 via-white to-cyan-50 ${isNative || isMobile ? 'pb-20 pt-0' : ''}`}>
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-cyan-500 via-primary-600 to-teal-600 text-white overflow-hidden">
+      <div className="relative bg-gradient-to-br from-cyan-500 via-teal-500 to-cyan-600 text-white overflow-hidden">
         {/* Animated Background Layers */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE0YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNk0wIDIwYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNiIvPjwvZz48L2c+PC9zdmc+')] opacity-30 animate-fadeIn"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl opacity-20 animate-float"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl opacity-20 animate-float delay-200"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl opacity-10 animate-float delay-400"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE0YzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNk0wIDIwYzMuMzEgMCA2IDIuNjkgNiA2cy0yLjY5IDYtNiA2LTYtMi42OS02LTYgMi42OS02IDYtNiIvPjwvZz48L2c+PC9zdmc+')] opacity-20 animate-fadeIn"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-10 animate-float"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-400 rounded-full filter blur-3xl opacity-10 animate-float delay-200"></div>
         
-        {/* User Menu - Hidden on Mobile/Native */}
+        {/* Desktop Header with User Menu */}
         {!isNative && !isMobile && (
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex justify-end">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex justify-between items-center">
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center shadow-lg">
+                  <span className="text-3xl">🏨</span>
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold">Reed Hotel</h2>
+                  <p className="text-xs text-cyan-100">Batam, Indonesia</p>
+                </div>
+              </div>
+              
+              {/* User Menu */}
+              <div>
               {isAuthenticated && user ? (
               <div className="relative">
                 <button
@@ -216,31 +228,41 @@ const Home: React.FC = () => {
               </div>
             )}
             </div>
+            </div>
           </div>
         )}
         
-        <div className={`relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ${isNative || isMobile ? 'py-6' : 'py-12 sm:py-16 lg:py-20'}`}>
+        {/* Mobile Safe Area */}
+        {(isNative || isMobile) && (
+          <div className="h-12"></div>
+        )}
+        
+        <div className={`relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ${isNative || isMobile ? 'py-8' : 'py-16 lg:py-20'}`}>
           {/* Mobile Header */}
           {(isNative || isMobile) ? (
             <>
-              <div className="flex items-center justify-center gap-3 mb-4 animate-fadeInDown">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center">
-                  <span className="text-3xl">🏨</span>
+              <div className="flex items-center justify-center gap-3 mb-3 animate-fadeInDown">
+                <div className="w-14 h-14 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-xl">
+                  <span className="text-4xl">🏨</span>
                 </div>
-                <h1 className="text-2xl font-bold">Reed Hotel</h1>
+                <div className="text-left">
+                  <h1 className="text-2xl font-bold">Reed Hotel</h1>
+                  <p className="text-xs text-cyan-100">Batam, Indonesia</p>
+                </div>
               </div>
-              <p className="text-sm text-cyan-50 mb-4 animate-fadeInUp">
-                Pengalaman Menginap Terbaik di Batam
+              <p className="text-base text-white font-medium mb-6 animate-fadeInUp px-4">
+                Pengalaman Menginap Terbaik
               </p>
             </>
           ) : (
             /* Desktop Header */
             <>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-2 animate-fadeInUp">
-                Selamat Datang di <span className="text-yellow-300 inline-block animate-bounce">Reed Hotel</span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight animate-fadeInUp">
+                Temukan Kenyamanan di <br/>
+                <span className="bg-gradient-to-r from-yellow-300 to-yellow-100 bg-clip-text text-transparent">Reed Hotel</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-cyan-50 max-w-3xl mx-auto px-4 animate-fadeInUp delay-200">
-                Pengalaman Menginap yang Tak Terlupakan di Bengkong, Batam
+              <p className="text-lg md:text-xl mb-8 text-cyan-50 max-w-2xl mx-auto animate-fadeInUp delay-100">
+                Pengalaman menginap premium dengan fasilitas modern di jantung kota Batam
               </p>
             </>
           )}
@@ -271,19 +293,24 @@ const Home: React.FC = () => {
       </div>
 
       {/* Filter Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 sm:mb-8 bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent px-4 animate-fadeInDown">
-          Pilih Kamar Impian Anda
-        </h2>
-        <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center px-2 animate-fadeInUp delay-200">
+      <div className={`max-w-7xl mx-auto ${isNative || isMobile ? 'px-4 py-6' : 'px-4 sm:px-6 lg:px-8 py-12'}`}>
+        <div className={`${isNative || isMobile ? 'mb-5' : 'mb-8'}`}>
+          <h2 className={`${isNative || isMobile ? 'text-xl' : 'text-3xl lg:text-4xl'} font-bold text-center mb-2 bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent animate-fadeInDown`}>
+            Pilih Kamar Impian Anda
+          </h2>
+          <p className={`text-center text-gray-600 ${isNative || isMobile ? 'text-sm' : 'text-base'}`}>
+            {filteredRooms.length} kamar tersedia
+          </p>
+        </div>
+        <div className={`flex flex-wrap ${isNative || isMobile ? 'gap-2' : 'gap-3'} justify-center animate-fadeInUp delay-200`}>
           {filters.map((filter, index) => (
             <button
               key={filter}
               onClick={() => setSelectedFilter(filter)}
-              className={`px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 ${
+              className={`${isNative || isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-2.5 text-base'} rounded-full font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                 selectedFilter === filter
-                  ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white shadow-lg shadow-cyan-500/50 scale-105 sm:scale-110'
-                  : 'bg-white text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 shadow-md hover:shadow-lg border-2 border-transparent hover:border-cyan-200'
+                  ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'bg-white text-gray-700 hover:bg-cyan-50 hover:text-cyan-700 shadow-md hover:shadow-lg border border-gray-200 hover:border-cyan-300'
               }`}
               style={{ animationDelay: `${300 + index * 50}ms` }}
             >
@@ -294,67 +321,68 @@ const Home: React.FC = () => {
       </div>
 
       {/* Rooms Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <div className={`max-w-7xl mx-auto ${isNative || isMobile ? 'px-4 pb-8' : 'px-4 sm:px-6 lg:px-8 pb-16'}`}>
+        <div className={`grid grid-cols-1 ${isNative || isMobile ? 'gap-4' : 'sm:grid-cols-2 lg:grid-cols-3 gap-6'}`}>
           {filteredRooms.map((room, index) => (
             <div
               key={room.id}
-              className={`card overflow-hidden group cursor-pointer animate-fadeInUp delay-${Math.min(index * 100, 500)}`}
+              className={`bg-white rounded-2xl overflow-hidden group cursor-pointer transition-all duration-300 hover:shadow-2xl border-2 border-gray-100 hover:border-cyan-200 animate-fadeInUp delay-${Math.min(index * 100, 500)}`}
               onClick={() => handleBookRoom(room.id)}
             >
-              <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+              <div className={`relative ${isNative || isMobile ? 'h-48' : 'h-56 lg:h-64'} overflow-hidden`}>
                 <img
                   src={room.image}
                   alt={room.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute top-4 right-4 bg-gradient-to-r from-cyan-500 to-teal-500 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
-                  <span className="text-white font-bold text-sm">{room.type}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className={`absolute ${isNative || isMobile ? 'top-3 right-3' : 'top-4 right-4'} bg-gradient-to-r from-cyan-500 to-teal-500 backdrop-blur-sm ${isNative || isMobile ? 'px-3 py-1.5' : 'px-4 py-2'} rounded-full shadow-lg`}>
+                  <span className={`text-white font-bold ${isNative || isMobile ? 'text-xs' : 'text-sm'}`}>{room.type}</span>
                 </div>
               </div>
               
-              <div className="p-4 sm:p-5 lg:p-6">
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">{room.name}</h3>
-                <p className="text-gray-600 mb-4 line-clamp-2">{room.description}</p>
+              <div className={`${isNative || isMobile ? 'p-4' : 'p-5 lg:p-6'}`}>
+                <h3 className={`${isNative || isMobile ? 'text-lg' : 'text-xl lg:text-2xl'} font-bold text-gray-800 mb-2 group-hover:text-cyan-600 transition-colors`}>{room.name}</h3>
+                <p className={`text-gray-600 mb-3 line-clamp-2 ${isNative || isMobile ? 'text-sm' : 'text-base'}`}>{room.description}</p>
                 
-                <div className="flex items-center gap-3 sm:gap-4 mb-4 text-xs sm:text-sm text-gray-600">
+                <div className={`flex items-center ${isNative || isMobile ? 'gap-3 mb-3' : 'gap-4 mb-4'} text-xs text-gray-600`}>
                   <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
                     </svg>
                     <span>{room.capacity} Tamu</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-cyan-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd"/>
                     </svg>
                     <span>{room.size} m²</span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4">
-                  {room.amenities.slice(0, 3).map((amenity, index) => (
+                <div className={`flex flex-wrap gap-1.5 ${isNative || isMobile ? 'mb-3' : 'mb-4'}`}>
+                  {room.amenities.slice(0, isNative || isMobile ? 2 : 3).map((amenity, idx) => (
                     <span
-                      key={index}
-                      className="text-xs sm:text-xs bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-cyan-200 font-medium"
+                      key={idx}
+                      className="text-xs bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 px-2.5 py-1 rounded-full border border-cyan-200 font-medium"
                     >
                       {amenity}
                     </span>
                   ))}
-                  {room.amenities.length > 3 && (
-                    <span className="text-xs sm:text-xs bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-cyan-200 font-medium">
-                      +{room.amenities.length - 3} lainnya
+                  {room.amenities.length > (isNative || isMobile ? 2 : 3) && (
+                    <span className="text-xs bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 px-2.5 py-1 rounded-full border border-cyan-200 font-medium">
+                      +{room.amenities.length - (isNative || isMobile ? 2 : 3)}
                     </span>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <div className={`flex items-center justify-between ${isNative || isMobile ? 'pt-3' : 'pt-4'} border-t border-gray-100`}>
                   <div>
-                    <p className="text-xs sm:text-sm text-gray-500">Mulai dari</p>
-                    <p className="text-xl sm:text-2xl font-bold text-primary-600">{formatPrice(room.price)}</p>
+                    <p className="text-xs text-gray-500">Mulai dari</p>
+                    <p className={`${isNative || isMobile ? 'text-lg' : 'text-xl lg:text-2xl'} font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent`}>{formatPrice(room.price)}</p>
                     <p className="text-xs text-gray-500">per malam</p>
                   </div>
-                  <button className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all duration-300 shadow-lg shadow-cyan-500/50 hover:shadow-xl hover:shadow-cyan-600/50 hover:scale-105 whitespace-nowrap">
+                  <button className={`bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white ${isNative || isMobile ? 'px-4 py-2 text-sm' : 'px-6 py-2.5 text-base'} rounded-xl font-bold transition-all duration-300 shadow-lg shadow-cyan-500/30 hover:shadow-xl hover:shadow-cyan-600/40 hover:scale-105 active:scale-95`}>
                     Pesan
                   </button>
                 </div>

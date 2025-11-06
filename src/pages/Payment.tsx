@@ -132,82 +132,105 @@ const Payment: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen overflow-x-hidden bg-gradient-to-br from-cyan-50 via-white to-teal-50 ${isNative || isMobile ? 'pb-20' : ''}`}>
-      {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-500 to-teal-500 shadow-xl sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Back Button - Hidden on Mobile/Native */}
-            {!isNative && !isMobile && (
+    <div className={`min-h-screen overflow-x-hidden bg-gradient-to-br from-gray-50 via-white to-cyan-50 ${isNative || isMobile ? 'pb-20 pt-0' : ''}`}>
+      {/* Header - Web */}
+      {!isNative && !isMobile && (
+        <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50 backdrop-blur-md animate-fadeInDown">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex items-center justify-between">
               <button
                 onClick={() => history.goBack()}
-                className="flex items-center gap-2 text-white hover:text-cyan-100 transition-all transform hover:scale-105 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30"
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-all transform hover:scale-105 bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-xl font-medium"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                <span className="font-medium">Kembali</span>
+                <span>Kembali</span>
               </button>
-            )}
-            
-            <div className={`flex items-center gap-2 ${isNative || isMobile ? 'mx-auto' : ''}`}>
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                <span className="text-2xl">💳</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-white">Reed Hotel</h1>
-                <p className="text-xs text-cyan-100">Pembayaran</p>
+              
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                  </svg>
+                </div>
+                <div>
+                  <h1 className="text-xl font-bold text-gray-800">Pembayaran</h1>
+                  <p className="text-sm text-gray-500">Pilih metode pembayaran</p>
+                </div>
               </div>
             </div>
-            
-            {/* Spacer for mobile to center title */}
-            {(isNative || isMobile) && <div className="w-10"></div>}
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8 text-center animate-fadeInDown">
-          <div className="inline-block w-16 h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center mb-4 animate-bounce">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-            </svg>
+      {/* Header - Mobile */}
+      {(isNative || isMobile) && (
+        <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50 animate-fadeInDown">
+          <div className="pt-16 px-4 pb-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => history.goBack()}
+                className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center hover:bg-gray-200 transition-all active:scale-95"
+              >
+                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className="flex-1 min-w-0">
+                <h1 className="text-lg font-bold text-gray-800">Pembayaran</h1>
+                <p className="text-xs text-gray-500 truncate">ID: {bookingData.bookingId}</p>
+              </div>
+            </div>
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-3">Pembayaran</h1>
-          <p className="text-gray-600 text-lg">Pilih metode pembayaran untuk menyelesaikan reservasi Anda</p>
         </div>
+      )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className={`max-w-7xl mx-auto ${isNative || isMobile ? 'px-4 py-4' : 'px-4 sm:px-6 lg:px-8 py-8'}`}>
+        {/* Page Title - Desktop Only */}
+        {!isNative && !isMobile && (
+          <div className="mb-8 text-center animate-fadeInDown">
+            <div className="inline-block w-16 h-16 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-2xl flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+              </svg>
+            </div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-2">Selesaikan Pembayaran</h1>
+            <p className="text-gray-600">Pilih metode pembayaran untuk menyelesaikan reservasi Anda</p>
+          </div>
+        )}
+
+        <div className={`grid grid-cols-1 lg:grid-cols-3 ${isNative || isMobile ? 'gap-4' : 'gap-8'}`}>
           {/* Payment Methods */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="card p-6 animate-fadeInUp shadow-xl">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Metode Pembayaran</h2>
+          <div className="lg:col-span-2 space-y-4">
+            <div className={`bg-white rounded-2xl ${isNative || isMobile ? 'p-4' : 'p-6'} animate-fadeInUp shadow-xl border-2 border-gray-100`}>
+              <h2 className={`${isNative || isMobile ? 'text-lg' : 'text-xl'} font-bold text-gray-800 mb-4`}>Metode Pembayaran</h2>
               
-              <div className="space-y-3">
+              <div className={`space-y-${isNative || isMobile ? '2' : '3'}`}>
                 {paymentMethods.map((method) => (
                   <button
                     key={method.id}
                     onClick={() => setSelectedPayment(method.id)}
-                    className={`w-full p-5 rounded-xl border-2 transition-all duration-300 flex items-center justify-between ${
+                    className={`w-full ${isNative || isMobile ? 'p-4' : 'p-5'} rounded-xl border-2 transition-all duration-300 flex items-center justify-between active:scale-95 ${
                       selectedPayment === method.id
-                        ? 'border-cyan-500 bg-gradient-to-r from-cyan-50 to-teal-50 shadow-lg shadow-cyan-200/50'
+                        ? 'border-cyan-500 bg-gradient-to-r from-cyan-50 to-teal-50 shadow-lg shadow-cyan-200/30'
                         : 'border-gray-200 hover:border-cyan-300 bg-white hover:shadow-md'
                     }`}
                   >
-                    <div className="flex items-center gap-4">
-                      <span className="text-3xl">{method.icon}</span>
+                    <div className="flex items-center gap-3">
+                      <span className={`${isNative || isMobile ? 'text-2xl' : 'text-3xl'}`}>{method.icon}</span>
                       <div className="text-left">
-                        <p className="font-semibold text-gray-800">{method.name}</p>
-                        <p className="text-sm text-gray-500">{method.type}</p>
+                        <p className={`font-semibold text-gray-800 ${isNative || isMobile ? 'text-sm' : 'text-base'}`}>{method.name}</p>
+                        <p className={`text-gray-500 ${isNative || isMobile ? 'text-xs' : 'text-sm'}`}>{method.type}</p>
                       </div>
                     </div>
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                    <div className={`${isNative || isMobile ? 'w-5 h-5' : 'w-6 h-6'} rounded-full border-2 flex items-center justify-center ${
                       selectedPayment === method.id
                         ? 'border-cyan-500 bg-gradient-to-r from-cyan-500 to-teal-500'
                         : 'border-gray-300'
                     }`}>
                       {selectedPayment === method.id && (
-                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className={`${isNative || isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-white`} fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
                         </svg>
                       )}
@@ -218,18 +241,18 @@ const Payment: React.FC = () => {
             </div>
 
             {/* Payment Info */}
-            <div className="card p-6 bg-gradient-to-br from-cyan-50 to-teal-50 border-2 border-cyan-200 animate-fadeInUp delay-100 shadow-xl">
+            <div className={`bg-gradient-to-br from-cyan-50 to-teal-50 border-2 border-cyan-200 rounded-2xl ${isNative || isMobile ? 'p-4' : 'p-6'} animate-fadeInUp delay-100 shadow-xl`}>
               <div className="flex gap-3">
-                <svg className="w-6 h-6 text-cyan-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <svg className={`${isNative || isMobile ? 'w-5 h-5' : 'w-6 h-6'} text-cyan-600 flex-shrink-0 mt-0.5`} fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
                 </svg>
                 <div>
-                  <h3 className="font-semibold text-cyan-900 mb-2">Informasi Pembayaran</h3>
-                  <ul className="text-sm text-cyan-800 space-y-1">
+                  <h3 className={`font-semibold text-cyan-900 mb-2 ${isNative || isMobile ? 'text-sm' : 'text-base'}`}>Informasi Pembayaran</h3>
+                  <ul className={`${isNative || isMobile ? 'text-xs' : 'text-sm'} text-cyan-800 space-y-1`}>
                     <li>• Pembayaran harus diselesaikan dalam 24 jam</li>
                     <li>• Setelah pembayaran berhasil, Anda akan menerima barcode konfirmasi</li>
                     <li>• Tunjukkan barcode saat check-in di hotel</li>
-                    <li>• Untuk bantuan, hubungi customer service kami</li>
+                    {!isNative && !isMobile && <li>• Untuk bantuan, hubungi customer service kami</li>}
                   </ul>
                 </div>
               </div>
@@ -238,8 +261,8 @@ const Payment: React.FC = () => {
 
           {/* Booking Summary */}
           <div className="lg:col-span-1">
-            <div className="card p-6 sticky top-24">
-              <h2 className="text-xl font-bold text-gray-800 mb-4">Ringkasan Pesanan</h2>
+            <div className={`bg-white rounded-2xl ${isNative || isMobile ? 'p-4' : 'p-6'} shadow-xl border-2 border-gray-100 ${!isNative && !isMobile ? 'sticky top-24' : ''}`}>
+              <h2 className={`${isNative || isMobile ? 'text-lg' : 'text-xl'} font-bold text-gray-800 mb-4`}>Ringkasan Pesanan</h2>
               
               <div className="space-y-4 mb-6">
                 <div>
