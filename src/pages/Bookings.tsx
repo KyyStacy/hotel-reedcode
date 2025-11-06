@@ -62,7 +62,7 @@ const Bookings: React.FC = () => {
       {(isNative || isMobile) && (
         <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50 animate-fadeInDown">
           {/* Safe area + Header content */}
-          <div className="pt-12 px-4 pb-4">
+          <div className="pt-16 px-4 pb-5">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
