@@ -13,6 +13,8 @@
     "android:setup": "npm run build && npx cap add android",
     "android:sync": "npm run build && npx cap sync android",
     "android:run": "npx cap run android",
+    "android:run:emulator": "npm run build && npx cap sync android && npx cap run android --target=\"Kyy_s_Phone\"",
+    "android:dev": "npm run build && npx cap sync android && npx cap run android --target=\"Kyy_s_Phone\" --livereload --external",
     "android:open": "npx cap open android"
   },
   "dependencies": {
