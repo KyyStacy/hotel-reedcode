@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Bookings from './pages/Bookings';
 import AdminDashboard from './pages/AdminDashboard';
 import ReceptionistDashboard from './pages/ReceptionistDashboard';
+import Settings from './pages/Settings';
 
 const App: React.FC = () => (
   <AuthProvider>
@@ -36,6 +37,9 @@ const App: React.FC = () => (
         </Route>
         <ProtectedRoute exact path="/profile">
           <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/settings">
+          <Settings />
         </ProtectedRoute>
         <ProtectedRoute exact path="/bookings">
           <Bookings />
